@@ -1,26 +1,27 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config'; // Import ConfigModule
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    // MongooseModule.forRoot(
-    //   'mongodb+srv://tranmanhphu2003:phuhoply03@back-end-nestjs.ehss4.mongodb.net/',
-    // ),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGO_URL'),
-      }),
-      inject: [ConfigService],
+    ConfigModule.forRoot({ isGlobal: true }), // Thiết lập ConfigModule là module toàn cục
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'sql12.freesqldatabase.com',
+      port: 3306,
+      username: 'sql12731973',
+      password: 'Rpu89MgJPr',
+      database: 'sql12731973',
+      entities: [User],
+      synchronize: true,
+      charset: 'utf8mb4', 
+
     }),
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    UsersModule,
+    UsersModule, // Import UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],

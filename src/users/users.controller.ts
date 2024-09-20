@@ -10,11 +10,9 @@ export class UsersController {
 
   @Post()
   create(
-    @Body("email") email: string,
-    @Body("password") password: string,
-    @Body("name") name: string,  
+    @Body() createDto: CreateUserDto
   ) {
-    return this.usersService.create(email, password, name);
+    return this.usersService.create(createDto);
   }
 
   @Get()
@@ -27,9 +25,9 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Patch()
+  update(@Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(updateUserDto);
   }
 
   @Delete(':id')
