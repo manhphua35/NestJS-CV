@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config'; // Import ConfigModule
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { UsersModule } from './users/users.module';
       charset: 'utf8mb4', 
 
     }),
-    UsersModule, // Import UsersModule
+    UsersModule,
+    AuthModule, // Import UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],
